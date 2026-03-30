@@ -25,4 +25,4 @@ jobs:
       - run: terraform apply -auto-approve
 
       - name: Upload App
-        run: aws s3 sync ../app s3://${{ secrets.BUCKET_NAME }}
+        run: aws s3 sync ../app s3://${{ secrets.BUCKET_NAME }} 
