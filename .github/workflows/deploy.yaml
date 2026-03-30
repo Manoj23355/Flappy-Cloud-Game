@@ -29,8 +29,15 @@ jobs:
       - name: Terraform Init
         run: terraform init
 
+      - name: Terraform Plan
+        run: terraform plan 
+
       - name: Terraform Apply
         run: terraform apply -auto-approve
 
+      - name: Get Bucket Name
+        id: tf_output
+        run: echo "bucket=$(terraform output -raw bucket_name)" >> $GITHUB_OUTPUT
+
       - name: Upload App
-        run: aws s3 sync ../app s3://${{ secrets.BUCKET_NAME }} 
+        run: aws s3 sync ../app s3://${{ steps.tf_output.outputs.bucket }}
